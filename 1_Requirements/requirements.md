@@ -2,7 +2,7 @@
 
 The Functional and Non – Functional requirements are: -
 
---> Functional Requirements:
+--> **Functional Requirements:**
 The Functional Requirements are: -
 
 1.	The software should be able to add the employee details by providing the details of Name, Age and Salary of the employee.
@@ -10,7 +10,7 @@ The Functional Requirements are: -
 3.	The software should be able to modify the employee details by providing the name of the employee. After giving the name, the new name, age and salary of the employee has to be entered to be modified.
 4.	The software should be able to delete the saved employee details by providing the name of the employee.
 
---> Non – Functional Requirements:
+--> **Non – Functional Requirements:**
 The Non - Functional Requirements are: -
 
 1.	The software should be available 24 X 7.
