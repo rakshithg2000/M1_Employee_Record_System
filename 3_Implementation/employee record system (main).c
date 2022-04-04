@@ -58,24 +58,104 @@ int main()
         case '1':
             //Adding Employee Details
             system("cls"); //Clearing Console Window
-            add();
+            fseek(fp,0,SEEK_END);
+
+            printf("\n**************ADD EMPLOYEE DETAILS**************\n\n");
+            a = 'y';
+            while(a == 'y')
+            {
+                printf("\nEnter name: ");
+                scanf("%s",&em.name);
+                printf("\nEnter age: ");
+                scanf("%d",&em.age);
+                printf("\nEnter basic salary: ");
+                scanf("%f",&em.bs);
+
+                fwrite(&em,record_size,1,fp);
+
+                printf("\nAdd another record (y/n): ");
+                fflush(stdin);
+                printf("\n\n");
+                a = getche();
+            }
             break;
         case '2':
             //Listing Employee Details
             system("cls"); //Clearing Console Window
-            list();
+            rewind(fp);
+
+            printf("\n**************LIST OF EMPLOYEE DETAILS**************\n\n");
+            while(fread(&e,record_size,1,fp)==1)
+            {
+                printf("\n%s %d %.2f",e.name,e.age,e.bs);
+            }
+            getch();
             break;
 
         case '3':
             //Modifying Employee Details
             system("cls"); //Clearing Console Window
 
-            modify();
+            printf("\n**************MODIFY EMPLOYEE DETAILS**************\n\n");
+            a = 'y';
+            while(a == 'y')
+            {
+                printf("\nEnter the employee name to modify: ");
+                scanf("%s", &empname);
+                rewind(fp);
+                if(strcmp(e.name,empname) != 0){
+                    printf("\nEmployee Does not exist !!!\n");
+                }
+                while(fread(&e,record_size,1,fp)==1)
+                {
+                    if(strcmp(e.name,empname) == 0)
+                    {
+                        printf("\nEnter New Name, Age and Salary: ");
+                        scanf("%s%d%f",&e.name,&e.age,&e.bs);
+                        fseek(fp,-record_size,SEEK_CUR);
+                        fwrite(&e,record_size,1,fp);
+
+                        break;
+                    }
+                }
+                printf("\nModify another record (y/n): ");
+                fflush(stdin);
+                a = getche();
+                printf("\n\n");
+            }
             break;
         case '4':
             //Deleting Employee Detials
             system("cls"); //Clearing Console Window
-            delete_details();
+            printf("\n**************DELETE EMPLOYEE DETAILS**************\n\n");
+            a = 'y';
+            while(a == 'y')
+            {
+                printf("\nEnter name of employee to delete: ");
+                scanf("%s",&empname);
+                ft = fopen("Temp.dat","wb");
+                rewind(fp);
+
+                if(strcmp(e.name,empname) != 0){
+                    printf("\nEmployee Does not exist !!!\n");
+                }
+                while(fread(&e,record_size,1,fp) == 1)
+                {
+                    if(strcmp(e.name,empname) == 0)
+                    {
+                        fwrite(&e,record_size,1,ft);
+                    }
+                }
+                fclose(fp);
+                fclose(ft);
+                remove("EMP.DAT");
+                rename("Temp.dat","EMP.DAT");
+                fp = fopen("EMP.DAT", "rb+");
+                printf("\nDelete another record (y/n): ");
+                fflush(stdin);
+                a = getche();
+                printf("\n\n");
+            }
             break;
         case '5':
             fclose(fp); //Closing File
